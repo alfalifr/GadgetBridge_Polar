@@ -27,6 +27,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoMaster;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.util.db.PolarEcgDataHandler;
 import nodomain.freeyourgadget.gadgetbridge.util.db.PolarHrDataHandler;
+import sidev.lib.android.siframe.tool.util.fun._LogFunKt;
 import sidev.lib.annotation.Modified;
 
 /**
@@ -64,8 +65,8 @@ public class LockHandler implements DBHandler {
         }
 
         //added, create table saat init.
-        new PolarHrDataHandler(context, helper).createTable();
-        new PolarEcgDataHandler(context, helper).createTable();
+        new PolarHrDataHandler(context).createTable();
+        new PolarEcgDataHandler(context).createTable();
     }
 
     @Override

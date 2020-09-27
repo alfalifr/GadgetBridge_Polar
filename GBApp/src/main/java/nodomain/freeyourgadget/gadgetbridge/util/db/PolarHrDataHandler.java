@@ -20,7 +20,7 @@ import sidev.lib.val.SuppressLiteral;
 
 public class PolarHrDataHandler extends SQLiteHandler<PolarHrData_> {
 
-    public static final String tableName= "PolarHrData";
+    public static final String tableName= "Polar_Hr_Data";
 
     public PolarHrDataHandler(@NotNull Context ctx) {
         this(ctx, null);
@@ -30,7 +30,7 @@ public class PolarHrDataHandler extends SQLiteHandler<PolarHrData_> {
         setTableName(tableName);
         try{
             //Agar db yg jadi tempat penyimpanan sama dg settingan app.
-            setSqliteHelper(helper != null ? helper : GBApplication.acquireDB().getHelper());
+            setSqliteHelperDelegate(helper != null ? helper : GBApplication.acquireDB().getHelper());
         } catch (GBException e){
             throw new IllegalStateException("Can't acquire DB");
         }

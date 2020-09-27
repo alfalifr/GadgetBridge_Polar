@@ -20,7 +20,7 @@ import sidev.lib.android.siframe.tool.SQLiteHandler;
 
 public class PolarEcgDataHandler extends SQLiteHandler<PolarEcgData> {
 
-    public static final String tableName= "PolarEcgData";
+    public static final String tableName= "Polar_Ecg_Data";
 
     public PolarEcgDataHandler(@NotNull Context ctx) {
         this(ctx, null);
@@ -30,7 +30,7 @@ public class PolarEcgDataHandler extends SQLiteHandler<PolarEcgData> {
         setTableName(tableName);
         try{
             //Agar db yg jadi tempat penyimpanan sama dg settingan app.
-            setSqliteHelper(helper != null ? helper : GBApplication.acquireDB().getHelper());
+            setSqliteHelperDelegate(helper != null ? helper : GBApplication.acquireDB().getHelper());
         } catch (GBException e){
             throw new IllegalStateException("Can't acquire DB");
         }
