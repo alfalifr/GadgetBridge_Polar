@@ -1,0 +1,9 @@
+include ':polar-demo-app' //include ':ModifiedLib'
+include ':polar-ble-src'
+include ':GBApp'
+include ':GBDaoGenerator'
+//include ':polar-protobuf-release'
+//include ':polar-ble-sdk'
+//include ':polar-ble-src'
+include ':app'
+rootProject.name = "GadgetBridge_Polar"
