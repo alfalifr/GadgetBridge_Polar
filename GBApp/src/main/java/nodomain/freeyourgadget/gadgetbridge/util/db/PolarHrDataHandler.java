@@ -15,7 +15,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.model.PolarHrData_;
 import sidev.lib.android.siframe.tool.SQLiteHandler;
-import sidev.lib.val.SuppressLiteral;
+//import sidev.lib.val.SuppressLiteral;
 
 
 public class PolarHrDataHandler extends SQLiteHandler<PolarHrData_> {

@@ -49,7 +49,6 @@ public class PolarHrData_ extends PolarHrData {
     /**
      * Last sample timestamp in nanoseconds.
      */
-    @ModelId
     public long timestamp;
 
     public PolarHrData_(int hr, List<Integer> rrs, boolean contactStatus, boolean contactStatusSupported, boolean rrAvailable, long timestamp) {

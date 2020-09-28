@@ -70,7 +70,6 @@ public class LockHandler implements DBHandler {
         //added, create table saat init.
         new PolarEcgDataHandler(context).createTable();
         new PolarHrDataHandler(context).createTable();
-//        _LogFunKt.loge(this, "PolarEcgData.class.getDeclaredFields().length= " +PolarEcgData.class.getDeclaredFields().length);
     }
 
     @Override
