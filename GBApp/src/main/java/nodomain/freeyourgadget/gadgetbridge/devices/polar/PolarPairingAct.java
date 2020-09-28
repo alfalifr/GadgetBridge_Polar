@@ -168,19 +168,16 @@ public class PolarPairingAct extends AbstractGBActivity implements BondingInterf
             manager.setCallback(new PolarBleApiCallback() {
                 @Override
                 public void deviceConnected(@NonNull PolarDeviceInfo polarDeviceInfo) {
-                    isPairing= false;
                     onBondingComplete(true);
                 }
 
                 @Override
                 public void deviceConnecting(@NonNull PolarDeviceInfo polarDeviceInfo) {
-                    isPairing = true;
                     pairingTv.setText(getString(nodomain.freeyourgadget.gadgetbridge.R.string.pairing, deviceCandidate));
                 }
 
                 @Override
                 public void deviceDisconnected(@NonNull PolarDeviceInfo polarDeviceInfo) {
-                    isPairing= false;
                     onBondingComplete(false);
                 }
             });
