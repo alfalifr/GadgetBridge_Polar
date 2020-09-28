@@ -357,7 +357,8 @@ public class ControlCenterv2 extends AppCompatActivity
         return new ChangeLog(this, css);
     }
 
-    private void launchDiscoveryActivity() {
+    @Modified(arg = "private -> protected")
+    protected void launchDiscoveryActivity() {
         startActivity(new Intent(this, DiscoveryActivity.class));
     }
 

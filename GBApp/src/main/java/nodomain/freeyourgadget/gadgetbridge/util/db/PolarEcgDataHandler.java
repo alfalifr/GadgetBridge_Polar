@@ -16,6 +16,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.model.PolarHrData_;
 import polar.com.sdk.api.model.PolarEcgData;
 import sidev.lib.android.siframe.tool.SQLiteHandler;
+import sidev.lib.android.siframe.tool.util.fun._LogFunKt;
 
 
 public class PolarEcgDataHandler extends SQLiteHandler<PolarEcgData> {
@@ -44,7 +45,7 @@ public class PolarEcgDataHandler extends SQLiteHandler<PolarEcgData> {
 
     @Override
     public PolarEcgData createModel(@NotNull Map<String, ?> map) {
-        List<Integer> samples= (List) map.get("rrs");
+        List<Integer> samples= (List) map.get("samples");
         long timeStamp= (Long) map.get("timeStamp");
         return new PolarEcgData(samples, timeStamp);
     }
@@ -91,6 +92,8 @@ class EcgCollectionHandler implements SQLiteHandler.CollectionTypeHandler<PolarE
     @Nullable
     @Override
     public Class<?> resolveColumnType(@NotNull Field field) {
+//        _LogFunKt.loge(this, "EcgCollectionHandler.resolveColumnType() field= " +field);
+//        _LogFunKt.loge(this, "EcgCollectionHandler.resolveColumnType() field.getName().equals(\"samples\")= " +field.getName().equals("samples"));
         if(field.getName().equals("samples"))
             return Integer.class;
         return null;

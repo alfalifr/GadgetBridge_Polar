@@ -157,7 +157,7 @@ public class PolarPairingAct extends AbstractGBActivity implements BondingInterf
         }
         BondingUtil.tryBondThenComplete(this, deviceCandidate);
  */
-/*
+///*
         isPairing= true;
         pairingTv.setText(getString(nodomain.freeyourgadget.gadgetbridge.R.string.pairing, deviceCandidate));
 
@@ -189,8 +189,8 @@ public class PolarPairingAct extends AbstractGBActivity implements BondingInterf
             polarInvalidArgument.printStackTrace();
         }
 // */
-        isPairing= true;
-        onBondingComplete(true);
+//        isPairing= true;
+//        onBondingComplete(true);
     }
 
     protected void broadcastPolarDeviceRegistered(){

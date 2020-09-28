@@ -22,11 +22,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.NonNull;
 
+import com.androidcommunications.polar.api.ble.model.gatt.client.BlePMDClient;
+
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoMaster;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.util.db.PolarEcgDataHandler;
 import nodomain.freeyourgadget.gadgetbridge.util.db.PolarHrDataHandler;
+import polar.com.sdk.api.model.PolarEcgData;
 import sidev.lib.android.siframe.tool.util.fun._LogFunKt;
 import sidev.lib.annotation.Modified;
 
@@ -65,8 +68,9 @@ public class LockHandler implements DBHandler {
         }
 
         //added, create table saat init.
-        new PolarHrDataHandler(context).createTable();
         new PolarEcgDataHandler(context).createTable();
+        new PolarHrDataHandler(context).createTable();
+//        _LogFunKt.loge(this, "PolarEcgData.class.getDeclaredFields().length= " +PolarEcgData.class.getDeclaredFields().length);
     }
 
     @Override

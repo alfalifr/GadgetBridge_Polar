@@ -49,7 +49,7 @@ public class PolarCoordinator extends AbstractExtendedDeviceCoordinator {
         if (macAddress.startsWith(PolarConst.MAC_ADDRESS_PREFIX)) {
             return DeviceType.POLAR;
         }
-        return DeviceType.POLAR;
+        return DeviceType.UNKNOWN;
     }
 
     /**

@@ -189,6 +189,7 @@ public class FileUtils {
     public static File getExternalFilesDir(String childDir) throws IOException {
         File writableDir= getExternalFilesDir();
         File destDir= new File(writableDir.getAbsolutePath() +"/" +childDir);
+        destDir.mkdirs();
         if(canWriteTo(destDir))
             return destDir;
         throw new IOException("cant write to dir " +destDir.getAbsolutePath());

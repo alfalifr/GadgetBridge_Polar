@@ -33,8 +33,10 @@ public class DbManagementAct extends DbManagementActivity {
                 dialog= new ExportDialogListView(this);
                 dialog.setDataList(toList(ExportKind.values()));
                 dialog.showtBtnAction(false);
+                dialog.setTitle("Export data to...");
                 dialog.setOnItemClickListener((_v, _int, data) -> {
                     exportData(data);
+                    dialog.cancel();
                     return Unit.INSTANCE;
                 });
             }
@@ -43,12 +45,21 @@ public class DbManagementAct extends DbManagementActivity {
     }
 
     void exportData(ExportKind kind){
+        String msg= "<export-data>";
         switch (kind){
-            case SQLite: super.exportDB(); break;
-            case CSV: Util.exportCsvData(this); break;
+            case SQLite: {
+                msg= "Data exported to SQLite form";
+                super.exportDB();
+                break;
+            }
+            case CSV: {
+                msg= "Data exported to CSV form";
+                Util.exportDbToCsv(this);
+                break;
+            }
             //TODO: export
         }
-        toast(this, "Export test kind= " +kind.name());
+        toast(this, msg);
     }
 
 

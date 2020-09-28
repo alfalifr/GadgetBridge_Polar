@@ -84,6 +84,7 @@
         <activity android:name="nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.WidgetSettingsActivity" />
         <activity android:name="nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2" />
         <activity android:name="nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarPairingAct"/>
+        <activity android:name=".activity.DbManagementAct"/>
 
         <activity
             android:name="nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity"

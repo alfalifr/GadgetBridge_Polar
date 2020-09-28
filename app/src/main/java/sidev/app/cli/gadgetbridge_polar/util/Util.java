@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -26,18 +27,31 @@ import nodomain.freeyourgadget.gadgetbridge.util.db.PolarHrDataHandler;
 import sidev.lib.android.siframe.db.DbCursor;
 import sidev.lib.android.siframe.tool.util._DbUtil;
 import sidev.lib.android.siframe.tool.util.fun._ActFragFunKt;
+import sidev.lib.android.siframe.tool.util.fun._LogFunKt;
+import sidev.lib.collection.iterator.NestedIterator;
+import sidev.lib.reflex.full._SiFieldFunKt;
+import sidev.lib.reflex.jvm._JavaReflexFun;
+import sidev.lib.reflex.jvm._JavaReflexFun_Ext;
 
 import static sidev.lib.android.siframe.tool.util.fun._ActFragFunKt.toast;
 
 public class Util {
     private Util(){}
-//    public Util getInstance(){ return new Util(); }
+    private static Util instance;
 
+    public static Util getInstance(){
+        if(instance == null)
+            instance= new Util();
+        return instance;
+    }
+
+/*
+Disabled karena gak berfungsi.
     /**
      * Mengambil semua record pada DB yg merupakan tabel data dari modul GadgetBridge.
-     */
+     * /
     @NonNull
-    public static List<Pair<String /*tableName*/, List<Triple<Integer, String, Object>>> /*rowList*/>
+    public static List<Pair<String /*tableName* /, List<Triple<Integer, String, Object>>> /*rowList* />
     getGadgetBridgeAllDbRow(@NonNull Context c){
         List<Pair<String, List<Triple<Integer, String, Object>>>> resList= new ArrayList<>();
 
@@ -62,9 +76,9 @@ public class Util {
 
     /**
      * Mengambil semua record pada DB yg merupakan tabel data dari modul GadgetBridge + data kustom dari modul Polar.
-     */
+     * /
     @NonNull
-    public static List<Pair<String /*tableName*/, List<Triple<Integer, String, Object>>> /*rowList*/>
+    public static List<Pair<String /*tableName* /, List<Triple<Integer, String, Object>>> /*rowList* />
     getAllDbRow(@NonNull Context c){
         List<Pair<String, List<Triple<Integer, String, Object>>>> resList= getGadgetBridgeAllDbRow(c);
 
@@ -88,15 +102,14 @@ public class Util {
         return resList;
     }
 
-
     /**
      * Mengambil semua DAO, tidak termasuk data yg dari Polar karena beda format.
-     */
+     * /
     @NonNull
     public static List<Class<? extends AbstractDao<?, ?>>> getGagdetBrigdeDaoClassList() throws GBException, NoSuchFieldException, IllegalAccessException {
         DBHandler handler= GBApplication.acquireDB();
-
         DaoMaster master= handler.getDaoMaster();
+
         Field f= master.getClass().getField("daoConfigMap"); //.get(master);
         f.setAccessible(true);
 
@@ -107,13 +120,18 @@ public class Util {
 
         return new ArrayList<>(daoMap.keySet());
     }
+*/
 
-    public static void exportCsvData(@NonNull Context c){
+    public static void exportDbToCsv(@NonNull Context c){
         try(DBHandler handler= GBApplication.acquireDB()){
             _DbUtil.SQLite.Operation op= _DbUtil.SQLite.INSTANCE.beginOp(handler.getHelper());
 //        PolarHrDataHandler polarHrDataHandler= new PolarHrDataHandler(c);
 //        PolarEcgDataHandler polarEcgDataHandler= new PolarEcgDataHandler(c);
 
+            // Mengambil semua table pada DB, termasuk tabel yg berisi konfigurasi sistem.
+            // Hal tersebut dikarenakan filter sulit dilakukan.
+            String[] tableNames= op.listAllTableName();
+/*
             List<String> tableNameList= new ArrayList<>();
             for(Class cls: getGagdetBrigdeDaoClassList()){
                 String tableName= (String) cls.getField("TABLENAME").get(null);
@@ -123,24 +141,31 @@ public class Util {
             tableNameList.add(PolarHrDataHandler.tableName);
             tableNameList.add(PolarEcgDataHandler.tableName);
 
-            for(String tableName : tableNameList){
+            _LogFunKt.loge(getInstance(), "exportDbToCsv() tableNameList.size= " +tableNameList.size());
+ */
+
+            // Ekspor tiap tabel ke CSV
+            for(String tableName : tableNames){
                 DbCursor cursor= op.query("SELECT * FROM " +tableName);
 
-                if(cursor.moveToFirst()){
-                    FileWriter out= new FileWriter(FileUtil.getCsvFileDest(tableName +".csv"));
-                    String[] headers= cursor.getColumnNames();
-                    CSVPrinter printer= new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers));
+                File dir= FileUtil.getCsvFileDest(tableName +".csv");
+                FileWriter out= new FileWriter(dir);
+                String[] headers= cursor.getColumnNames();
+                CSVPrinter printer= new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers));
 
-                    int i= 0;
-                    while (cursor.moveToPosition(i++)){
-                        Object[] values= cursor.getValuesAtCurrentRow();
-                        printer.printRecord(values);
-                    }
+//                _LogFunKt.loge(getInstance(), "Export data table " +tableName +" to dir " +dir.getAbsolutePath());
+
+                int i= 0;
+                while (cursor.moveToPosition(i++)){
+                    Object[] values= cursor.getValuesAtCurrentRow();
+                    printer.printRecord(values);
                 }
+                printer.close();
             }
             _ActFragFunKt.toast(c, "DB exported to CSVs successfully");
         } catch (Exception e){
             e.printStackTrace();
+            _LogFunKt.loge(getInstance(), "exportDbToCsv() error", e);
             _ActFragFunKt.toast(c, "Can't get all rows for Polar data. \nerror= " +e.getMessage());
         }
     }
