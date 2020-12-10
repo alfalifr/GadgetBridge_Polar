@@ -16,7 +16,8 @@
         android:layout_marginTop="100dp"
         android:textSize="20sp"
         android:translationZ="10dp"
-        android:textColor="@color/hitam"/>
+        android:textColor="@color/hitam"
+        android:visibility="gone"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -39,6 +40,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="bottom|end"
+        android:src="@drawable/ic_plus"
+        android:tint="@color/putih"
         android:layout_margin="16dp" />
 
 
